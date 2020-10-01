@@ -1,8 +1,0 @@
-API_KEY=AIzaSyCzvx-rfx45hry6YbfRDkXfraBPK_5Jin8
-AUTH_DOMAIN=transaction-io.firebaseapp.com
-DB_URL=https://transaction-io.firebaseio.com
-PROJECT_ID=transaction-io
-STORAGE_BUCKET=transaction-io.appspot.com
-SENDER_ID=328163410507
-APP_ID=1:328163410507:web:e91fca0a8df922f38d43ce
-MEASUREMENT_ID=G-ZESNEBTYZ4
