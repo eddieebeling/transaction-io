@@ -58,14 +58,14 @@ export default {
   ],
   firebase: {
     config: {
-      apiKey: "AIzaSyCzvx-rfx45hry6YbfRDkXfraBPK_5Jin8",
-      authDomain: "transaction-io.firebaseapp.com",
-      databaseURL: "https://transaction-io.firebaseio.com",
-      projectId: "transaction-io",
-      storageBucket: "transaction-io.appspot.com",
-      messagingSenderId: "328163410507",
-      appId: "1:328163410507:web:e91fca0a8df922f38d43ce",
-      measurementId: "G-ZESNEBTYZ4"
+      apiKey: process.env.API_KEY,
+      authDomain: process.env.AUTH_DOMAIN,
+      databaseURL: process.env.DB_URL,
+      projectId: process.env.PROJECT_ID,
+      storageBucket: process.env.STORAGE_BUCKET,
+      messagingSenderId: process.env.SENDER_ID,
+      appId: process.env.APP_ID,
+      measurementId: process.env.MEASUREMENT_ID,
     },
     services: {
       auth: true // Just as example. Can be any other service.
