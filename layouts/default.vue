@@ -17,6 +17,10 @@ html, body {
 body {
   @apply font-sans bg-purple-700;
 }
+.input-label {
+  max-height:52px;
+  height: 52px;
+}
 .fade-enter-active, .fade-leave-active { transition: opacity .3s; }
 .fade-enter, .fade-leave-active { opacity: 0; }
   input::placeholder {
