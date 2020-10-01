@@ -4,7 +4,6 @@
             <h1 class="text-white text-4xl font-black w-1/3 leading-snug">Welcome back!</h1>
             <div>{{errorCode}}</div>
             <div>{{errorMessage}}</div>
-            <a v-on:click="logout">logout</a>
         </div>
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#44337a" fill-opacity="1" d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,250.7C672,277,768,267,864,224C960,181,1056,107,1152,85.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
@@ -78,25 +77,14 @@ export default {
         doLogin: function(e) {
             var vm = this;
             vm.$fireAuth.signInWithEmailAndPassword(vm.username, vm.password).then(function(result) {
-                // result.user.tenantId should be ‘TENANT_PROJECT_ID’.
-                console.log('authenticated');
-                console.log(result);
+                vm.$store.commit('authenticated', true)
+                vm.$store.commit('updateUser', JSON.stringify(result.user))
                 vm.$router.push('/');
             }).catch(function(error) {
                 vm.errorCode = error.code;
                 vm.errorMessage = error.message;
             });
         },
-        logout: function() {
-            var vm = this;
-            vm.$fireAuth.signOut().then(function() {
-                // Sign-out successful.
-                console.log('user is logged out');
-            }).catch(function(error) {
-                // An error happened.
-                console.log(error);
-            });
-        }
     },
     mounted () {
     }

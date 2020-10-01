@@ -24,6 +24,11 @@
                 <a v-on:click="createUser" class="block text-center w-full p-3 text-sm font-medium bg-blue-400 text-blue-900 rounded focus:outline-none shadow-lg">
                     Sign up
                 </a>
+                <linethrough>or</linethrough>
+                <!-- Sign up button -->
+                <nuxt-link to="/login" class="w-full block text-center p-3 text-sm font-medium border border-purple-600 text-purple-400 rounded focus:outline-none mb-4">
+                    Login
+                </nuxt-link>
             </div>
         </div>
     </div>
