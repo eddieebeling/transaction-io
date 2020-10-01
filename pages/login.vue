@@ -2,6 +2,9 @@
     <div class="h-full flex flex-col">
         <div class="flex flex-col flex-grow justify-center px-8">
             <h1 class="text-white text-4xl font-black w-1/3 leading-snug">Welcome back!</h1>
+            <div>{{errorCode}}</div>
+            <div>{{errorMessage}}</div>
+            <a v-on:click="logout">logout</a>
         </div>
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#44337a" fill-opacity="1" d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,250.7C672,277,768,267,864,224C960,181,1056,107,1152,85.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
@@ -24,9 +27,9 @@
                     <nuxt-link to="/forgot" class="text-white text-sm font-medium hover:underline">Forgot password?</nuxt-link>
                 </div>
                 <!-- Login button -->
-                <button v-on:click="doLogin" v-bind:disabled="disableLogin" class="w-full p-3 text-sm font-medium bg-blue-400 text-blue-900 rounded focus:outline-none shadow-lg">
+                <a v-on:click="doLogin" v-bind:disabled="disableLogin" class="w-full block text-center p-3 text-sm font-medium bg-blue-400 text-blue-900 rounded focus:outline-none shadow-lg">
                     Login
-                </button>
+                </a>
                 <linethrough>or</linethrough>
                 <!-- Sign up button -->
                 <nuxt-link to="/signup" class="w-full block text-center p-3 text-sm font-medium border border-purple-600 text-purple-400 rounded focus:outline-none mb-4">
@@ -48,6 +51,8 @@ export default {
             maskPassword: true,
             username: '',
             password: '',
+            errorCode: '',
+            errorMessage: '',
             reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
         }
     },
@@ -71,23 +76,29 @@ export default {
             password.setAttribute('type', type);
         },
         doLogin: function(e) {
-            e.preventDefault();
-            console.log('submit login');
+            var vm = this;
+            vm.$fireAuth.signInWithEmailAndPassword(vm.username, vm.password).then(function(result) {
+                // result.user.tenantId should be ‘TENANT_PROJECT_ID’.
+                console.log('authenticated');
+                console.log(result);
+                vm.$router.push('/');
+            }).catch(function(error) {
+                vm.errorCode = error.code;
+                vm.errorMessage = error.message;
+            });
         },
-        async createUser(email, pw) {
-            try {
-                await this.$fireAuth.createUserWithEmailAndPassword(
-                    email,
-                    pw
-                )
-            } catch (e) {
-                handleError(e)
-            }
+        logout: function() {
+            var vm = this;
+            vm.$fireAuth.signOut().then(function() {
+                // Sign-out successful.
+                console.log('user is logged out');
+            }).catch(function(error) {
+                // An error happened.
+                console.log(error);
+            });
         }
     },
     mounted () {
-        var vm = this;
-        vm.createUser('eddieebeling@gmail.com', 'thisismypassword')
     }
 }
 </script>

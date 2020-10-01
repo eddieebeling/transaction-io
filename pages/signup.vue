@@ -65,6 +65,8 @@ export default {
                 )
             } catch (e) {
                 handleError(e)
+            } finally {
+                vm.$router.push('/');
             }
         }
     },
