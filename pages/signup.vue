@@ -61,18 +61,16 @@ export default {
         },
     },
     methods: {
-        async createUser() {
+        createUser: function() {
             var vm = this
-            try {
-                let response = await vm.$fireAuth.createUserWithEmailAndPassword(
-                    vm.email,
-                    vm.password
-                )
-            } catch (e) {
-                handleError(e)
-            } finally {
+            vm.$fireAuth.createUserWithEmailAndPassword(vm.email, vm.password).then(function(result) {
+                vm.$store.commit('authenticated', true)
+                vm.$store.commit('updateUser', JSON.stringify(result.user))
                 vm.$router.push('/');
-            }
+            }).catch(function(error) {
+                vm.errorCode = error.code;
+                vm.errorMessage = error.message;
+            });
         }
     },
     mounted () {
